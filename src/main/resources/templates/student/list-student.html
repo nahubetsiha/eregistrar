@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layouts/main-layout}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<div class="container" layout:fragment="content">
+<!--    <p>Date: <input type="text" id="datepicker"></p>-->
+    <br>
+    <div>
+    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModalCenter"><a href="/addStudent">Add New Student</a>
+
+<!--    </button>-->
+<!--        <button type="button" class="btn btn-primary float-right"><a href="/addStudent">Add New Student</a>-->
+
+        </button>
+    </div>
+    <br>
+    <br>
+    <br>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" class="needs-validation" th:action="@{/addStudent}" th:object="${student}" novalidate>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="StudentNumber">Student Number</label>
+                            <input type="text" class="form-control" th:field="*{studentNumber}" id="StudentNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="FirstName">First Name</label>
+                            <input type="text" class="form-control" th:field="*{firstName}" id="FirstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="MiddleName">Middle Name</label>
+                            <input type="text" class="form-control" th:field="*{middleName}" id="MiddleName">
+                        </div>
+                        <div class="form-group">
+                            <label for="LastName">Last Name</label>
+                            <input type="text" class="form-control" th:field="*{lastName}" id="LastName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="GPA">GPA</label>
+                            <input type="text" class="form-control" th:field="*{cGpa}" id="GPA" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="datepicker">Enrollment Date</label>
+                            <input type="text" id="datepicker" th:field="*{enrollmentDate}" class="form-control" required>
+<!--                            <input data-provide="datepicker" class="form-control" id="validationCustom05">-->
+                        </div>
+<!--                        <p>Date: <input type="text" id="datepicker"></p>-->
+                        <div class="form-group">
+                            <label for="International">International</label>
+<!--                            <input id="International" type="checkbox" name="isPresent" value="false" th:field="*{international}"  th:checked="${true}"/>-->
+                            <select id="International" th:field="*{international}" class="form-control" required>
+                                <option th:value="${true}">Yes</option>
+                                <option th:value="${false}">No</option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="id" th:field="*{studentId}">
+<!--                        <button type="submit" class="btn btn-primary">Submit</button>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                <script>
+                    // Example starter JavaScript for disabling form submissions if there are invalid fields
+                    (function() {
+                        'use strict';
+                        window.addEventListener('load', function() {
+                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                            var forms = document.getElementsByClassName('needs-validation');
+                            // Loop over them and prevent submission
+                            var validation = Array.prototype.filter.call(forms, function(form) {
+                                form.addEventListener('submit', function(event) {
+                                    if (form.checkValidity() === false) {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                    }
+                                    form.classList.add('was-validated');
+                                }, false);
+                            });
+                        }, false);
+                    })();
+                </script>
+                </form>
+            </div>
+        </div>
+    </div>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Student Number</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Middle Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">GPA</th>
+        <th scope="col">Enrollment Date</th>
+        <th scope="col">International</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="studentLength==0">No Student data available</tr>
+    <tr class="table-dark" th:each="student, ite : ${students}">
+        <th scope="row" th:text="${ite.count}"></th>
+        <td th:text="${student.studentNumber}"></td>
+        <td th:text="${student.firstName}"></td>
+        <td th:text="${student.middleName}"></td>
+        <td th:text="${student.lastName}"></td>
+        <td th:text="${student.cGpa}"></td>
+        <td th:text="${student.enrollmentDate}"></td>
+        <td th:text="${student.international}? 'Yes':'No'"></td>
+        <td>
+            <a class="btn btn-primary" th:href="@{/editStudent/{id}(id=${student.studentId})}"> Edit
+            </a>
+        </td>
+        <td>
+            <a class="btn btn-danger" th:href="@{/deleteStudent/{id}(id=${student.studentId})}"> Delete
+            </a>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+
+<!--<div th:replace="fragments/footer :: footer">-->
+
+</div>
+</body>
+</html>
