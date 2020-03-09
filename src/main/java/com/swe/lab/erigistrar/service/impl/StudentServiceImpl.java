@@ -25,33 +25,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student saveStudent(Student student) {
-
-        if(student.getStudentId()==null){
-            return studentRepository.save(student);
-        } else {
-            Optional<Student> editStudent = studentRepository.findById(student.getStudentId());
-            if(editStudent.isPresent()){
-                Student newStudent = editStudent.get();
-                newStudent.setStudentNumber(student.getStudentNumber());
-                newStudent.setFirstName(student.getFirstName());
-                newStudent.setLastName(student.getLastName());
-                newStudent.setMiddleName(student.getMiddleName());
-                newStudent.setcGpa(student.getcGpa());
-                newStudent.setEnrollmentDate(student.getEnrollmentDate());
-                newStudent.setInternational(student.getInternational());
-
-                return studentRepository.save(newStudent);
-            }else {
-                return studentRepository.save(student);
-            }
-        }
+    public List<Student> searchStudent(String searchString) {
+        return studentRepository.findAllByStudentNumberEquals(searchString);
     }
 
-//    public void editStudent(Long id){
-//        Optional<Student> student = studentRepository.findById(id);
-//
-//    }
+    @Override
+    public Student saveStudent(Student student) {
+            return studentRepository.save(student);
+    }
+
 
     @Override
     public void deleteStudent(Long id)
@@ -62,5 +44,10 @@ public class StudentServiceImpl implements StudentService {
         {
             studentRepository.deleteById(id);
         }
+    }
+
+    @Override
+    public Student getStudentById(Long id) {
+        return studentRepository.getOne(id);
     }
 }

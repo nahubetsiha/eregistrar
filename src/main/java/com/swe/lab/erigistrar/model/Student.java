@@ -12,7 +12,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studentId;
+    private long studentId;
     @Column(nullable = false)
     private String studentNumber;
     @Column(nullable = false)
@@ -40,7 +40,7 @@ public class Student {
         this.international = international;
     }
 
-    public Long getStudentId() {
+    public long getStudentId() {
         return studentId;
     }
 

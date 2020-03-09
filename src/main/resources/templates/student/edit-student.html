@@ -1,0 +1,84 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main-layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Datepicker - Default functionality</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+
+    <form method="post" class="needs-validation" th:action="@{/editStudent}" th:object="${editStudent}" novalidate>
+        <div class="modal-body">
+            <input type="hidden" id="id" th:field="*{studentId}">
+            <div class="form-group">
+                <label for="StudentNumber">Student Number</label>
+                <input type="text" class="form-control" th:field="*{studentNumber}" id="StudentNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="FirstName">First Name</label>
+                <input type="text" class="form-control" th:field="*{firstName}" id="FirstName" required>
+            </div>
+            <div class="form-group">
+                <label for="MiddleName">Middle Name</label>
+                <input type="text" class="form-control" th:field="*{middleName}" id="MiddleName">
+            </div>
+            <div class="form-group">
+                <label for="LastName">Last Name</label>
+                <input type="text" class="form-control" th:field="*{lastName}" id="LastName" required>
+            </div>
+            <div class="form-group">
+                <label for="GPA">GPA</label>
+                <input type="text" class="form-control" th:field="*{cGpa}" id="GPA" required>
+            </div>
+            <div class="form-group">
+                <label for="datepicker">Enrollment Date</label>
+                <input type="text" id="datepicker" th:field="*{enrollmentDate}" class="form-control" required>
+                <!--                            <input data-provide="datepicker" class="form-control" id="validationCustom05">-->
+            </div>
+            <!--                        <p>Date: <input type="text" id="datepicker"></p>-->
+            <div class="form-group">
+                <label for="International">International</label>
+                <!--                            <input id="International" type="checkbox" name="isPresent" value="false" th:field="*{international}"  th:checked="${true}"/>-->
+                <select id="International" th:field="*{international}" th:value="*{international}" class="form-control" required>
+                    <option selected th:value="${true}" th:text="Yes"></option>
+                    <option th:value="${false}" th:text="No"></option>
+                </select>
+            </div>
+            <!--                        <button type="submit" class="btn btn-primary">Submit</button>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+        </script>
+    </form>
+
+
+</body>
+</html>
